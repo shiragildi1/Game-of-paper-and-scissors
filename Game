@@ -1,0 +1,88 @@
+import random
+import time
+
+def main():
+    play_game()
+
+def get_user_choice():
+    valid_options = ["rock", "paper", "scissors"]
+    user_choice = ""
+    while user_choice not in valid_options:
+        user_choice = input("Enter 'rock', 'paper', or 'scissors': ").lower()
+    return user_choice
+
+def get_computer_choice():
+    options = ["rock", "paper", "scissors"]
+    return random.choice(options)
+
+def play_round():
+    user_choice = get_user_choice()
+    computer_choice = get_computer_choice()
+    print("Computer chose:", computer_choice)
+    print("You chose:", user_choice)
+    if user_choice == computer_choice:
+        print("It's a tie!")
+        return "tie"
+    elif user_choice == "rock":
+        if computer_choice == "scissors":
+            print("Rock beats scissors! You win!")
+            return "user"
+        else:
+            print("Paper beats rock! Computer wins!")
+            return "computer"
+    elif user_choice == "paper":
+        if computer_choice == "rock":
+            print("Paper beats rock! You win!")
+            return "user"
+        else:
+            print("Scissors beat paper! Computer wins!")
+            return "computer"
+    elif user_choice == "scissors":
+        if computer_choice == "paper":
+            print("Scissors beat paper! You win!")
+            return "user"
+        else:
+            print("Rock beats scissors! Computer wins!")
+            return "computer"
+def time_level():
+    time_level_input = input("Please enter how much time you want for each level:\n")
+    return int(time_level_input)
+
+def how_much_level():
+    how_much_level_input = input("Please enter how many levels you want to play in the game:\n")
+    return int(how_much_level_input)
+
+
+def play_game():
+    num_rounds = how_much_level()
+    time_limit = time_level()
+    print("Welcome to Rock-Paper-Scissors!")
+    print("You will play:", num_rounds, "rounds and each round will have:", time_limit, "seconds.")
+    print("Let's begin!")
+    user_score = 0
+    computer_score = 0
+    for round_num in range(num_rounds):
+        print("Round:", round_num + 1)
+        start_time = time.time()
+        winner = play_round()
+        end_time = time.time()
+        if winner == "user":
+            user_score += 1
+        elif winner == "computer":
+            computer_score += 1
+        time_taken = end_time - start_time
+        if time_taken > time_limit:
+            print("You took:", "{:.1f}".format(time_taken), "seconds which is more than the time limit of", time_limit, "seconds.")
+            print("You lose this round!")
+            computer_score += 1
+        print("The current score is: User", user_score, "Computer", computer_score)
+    if user_score > computer_score:
+        print("Congratulations! You won the game!")
+    elif user_score < computer_score:
+        print("Sorry, the computer won the game. Better luck next time!")
+    else:
+        print("It's a tie game!")
+    print("Thanks for playing Rock-Paper-Scissors!")
+
+if __name__ == '__main__':
+    main()
